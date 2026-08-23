@@ -34,11 +34,11 @@ alloy:
 
         stage.logfmt {
           mapping = {
-            logger   = "logger"
-            time     = "t"
-            level    = "level"
-            msg      = "msg"
-            duration = "duration"
+            logger   = "logger",
+            time     = "t",
+            level    = "level",
+            msg      = "msg",
+            duration = "duration",
           }
         }
         stage.timestamp {
@@ -49,7 +49,7 @@ alloy:
         // Keep low-cardinality fields as Loki labels.
         stage.labels {
           values = {
-            level = "level"
+            level = "level",
           }
         }
 
