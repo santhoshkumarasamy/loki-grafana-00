@@ -30,6 +30,8 @@ loki:
     retention_period: 168h
     allow_structured_metadata: true
     volume_enabled: true
+  
+  commonConfig:
     replication_factor: 1
 
   compactor:
