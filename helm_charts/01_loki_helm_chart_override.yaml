@@ -42,13 +42,13 @@ loki:
     enabled: true
 
 read:
-  replicas: 1
+  replicas: 2
 
 write:
-  replicas: 1
+  replicas: 2
 
 backend:
-  replicas: 1
+  replicas: 2
 
 gateway:
   enabled: true
