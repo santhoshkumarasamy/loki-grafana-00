@@ -1,9 +1,4 @@
 alloy:
-  env:
-    - name: NODE_NAME
-      valueFrom:
-        fieldRef:
-          fieldPath: spec.nodeName
   configMap:
     content: |-
       logging {
@@ -21,7 +16,7 @@ alloy:
         // Only discover Pods running on this Alloy instance's node.
         selectors {
           role  = "pod"
-          field = "spec.nodeName=" + sys.env("NODE_NAME")
+          field = "spec.nodeName=" + sys.env("K8S_NODE_NAME")
         }
       }
 
