@@ -27,7 +27,6 @@ loki:
       storage_prefix: loki/
       s3:
         region: us-east-1
-        s3ForcePathStyle: false
         endpoint: https://s3.us-east-1.amazonaws.com
 
   limits_config:
