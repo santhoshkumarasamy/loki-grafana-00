@@ -30,6 +30,7 @@ loki:
     retention_period: 168h
     allow_structured_metadata: true
     volume_enabled: true
+    replication_factor: 1
 
   compactor:
     retention_enabled: true
@@ -42,13 +43,13 @@ loki:
     enabled: true
 
 read:
-  replicas: 2
+  replicas: 1
 
 write:
-  replicas: 2
+  replicas: 1
 
 backend:
-  replicas: 2
+  replicas: 1
 
 gateway:
   enabled: true
