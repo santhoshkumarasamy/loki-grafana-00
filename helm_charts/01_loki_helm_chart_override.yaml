@@ -19,16 +19,16 @@ loki:
     bucketNames:
       chunks: loki-test-bucket-sk
       ruler: loki-test-bucket-sk
+
     use_thanos_objstore: true
 
     object_store:
       type: s3
       storage_prefix: loki/
-
-    s3:
-      region: us-east-1
-      s3ForcePathStyle: false
-      endpoint: https://s3.us-east-1.amazonaws.com
+      s3:
+        region: us-east-1
+        s3ForcePathStyle: false
+        endpoint: https://s3.us-east-1.amazonaws.com
 
   limits_config:
     retention_period: 168h
