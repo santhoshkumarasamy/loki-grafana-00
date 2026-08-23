@@ -28,7 +28,6 @@ Lets get it exposed and get password.
 ```sh
 # Get the password
 kubectl -n default get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
-gC6wdsdO2CMj-lvU
 # Expose the service to outside world
 kubectl port-forward service/my-argo-cd-argocd-server -n default 8080:80 --address 0.0.0.0
 ```
@@ -48,7 +47,6 @@ Once deployed everything, expose the grafana and get admin password
 kubectl -n grafana get secret grafana -o jsonpath={.data.admin-password} | base64 -d
 kubectl -n grafana port-forward --address 0.0.0.0 svc/grafana 8081:80
 ```
-CaowMO93kC74sbCkXelSGVpKxQlL3vBhLE5iNYkJ
 
 
 # Now lets setup loki and alloy 
@@ -56,7 +54,7 @@ CaowMO93kC74sbCkXelSGVpKxQlL3vBhLE5iNYkJ
 ## Setup Loki and alloy with some references
 
 ```sh
-kubectl apply -f loki.yaml
+kubectl apply -f loki-v1.yaml
 ```
 
 Here loki didnt use minio for storage cause its going deprecated.
@@ -70,3 +68,28 @@ This configs I took references form the above blog. Refer for more details.
 
 
 ## Setting up Loki with s3 storage
+
+Okay so the above setup is not good for prod level setup
+
+so lets setup loki aws s3 as a storage
+
+deploy argo cd and the test application.
+
+setup the namespace of the loki and the secret containing the aws access key
+
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: loki-s3-credentials
+  namespace: default # change if using a different namespace
+type: Opaque
+stringData:
+  AWS_ACCESS_KEY_ID: "YOUR_ACTUAL_ACCESS_KEY"
+  AWS_SECRET_ACCESS_KEY: "YOUR_ACTUAL_SECRET_KEY"
+```
+
+this part you can even improve this access
+- this can done using IRSA
+- In EKS use the POD Identity
+

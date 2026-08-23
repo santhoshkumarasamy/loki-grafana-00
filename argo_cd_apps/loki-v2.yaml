@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: loki
+  namespace: default
+spec:
+  destination:
+    namespace: loki
+    server: https://kubernetes.default.svc
+  project: default
+  sources:
+  - chart: loki
+    helm:
+      valueFiles:
+      - $values/helm_charts/00_loki_helm_chart_override.yaml
+    repoURL: https://grafana-community.github.io/helm-charts/
+    targetRevision: 18.11.0
+  - repoURL: https://github.com/santhoshkumarasamy/loki-garafana-00
+    targetRevision: main
+    ref: values
+  syncPolicy:
+    automated:
+      enabled: true
+      prune: false
+      selfHeal: false
+    syncOptions:
+    - CreateNamespace=true
