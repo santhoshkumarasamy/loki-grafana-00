@@ -58,3 +58,6 @@ Now lets setup loki and alloy
 ```sh
 kubectl apply -f loki.yaml
 ```
+
+
+https://devopscube.com/setup-grafana-loki/#step-3-deploy-loki
