@@ -12,7 +12,7 @@ spec:
   - chart: loki
     helm:
       valueFiles:
-      - $values/helm_charts/00_loki_helm_chart_override.yaml
+      - $values/helm_charts/01_loki_helm_chart_override.yaml
     repoURL: https://grafana-community.github.io/helm-charts/
     targetRevision: 18.11.0
   - repoURL: https://github.com/santhoshkumarasamy/loki-garafana-00
