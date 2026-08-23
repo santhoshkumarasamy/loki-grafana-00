@@ -15,7 +15,6 @@ loki:
 
   storage:
     # type: s3
-
     bucketNames:
       chunks: loki-test-bucket-sk
       ruler: loki-test-bucket-sk

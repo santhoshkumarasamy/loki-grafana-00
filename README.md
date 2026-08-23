@@ -60,7 +60,7 @@ kubectl apply -f loki-v1.yaml
 Here loki didnt use minio for storage cause its going deprecated.
 
 ```sh
-kubectl apply -f alloy.yaml
+kubectl apply -f alloy-v1.yaml
 ```
 https://devopscube.com/setup-grafana-loki/#step-3-deploy-loki
 
