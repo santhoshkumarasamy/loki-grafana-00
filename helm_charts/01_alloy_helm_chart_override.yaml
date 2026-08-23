@@ -1,0 +1,70 @@
+alloy:
+  env:
+    - name: NODE_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: spec.nodeName
+  configMap:
+    content: |-
+      logging {
+        level = "info"
+        format = "logfmt"
+      }
+      discovery.kubernetes "pods" {
+        role = "pod"
+
+        // Only discover Pods in this namespace.
+        namespaces {
+          names = ["grafana"]
+        }
+
+        // Only discover Pods running on this Alloy instance's node.
+        selectors {
+          role  = "pod"
+          field = "spec.nodeName=" + sys.env("NODE_NAME")
+        }
+      }
+
+      loki.source.kubernetes "pods" {
+        targets    = discovery.kubernetes.pods.targets
+        forward_to = [loki.process.pod_logs.receiver]
+      }
+
+      loki.process "pod_logs" {
+
+        stage.logfmt {
+          mapping = {
+            logger   = "logger"
+            time     = "t"
+            level    = "level"
+            msg      = "msg"
+            duration = "duration"
+          }
+        }
+        stage.timestamp {
+          source = "time"
+          format = "RFC3339Nano"
+        }
+
+        // Keep low-cardinality fields as Loki labels.
+        stage.labels {
+          values = {
+            level = "level"
+          }
+        }
+
+        forward_to = [loki.write.loki.receiver]
+      }
+
+      loki.write "loki" {
+        endpoint {
+          url = "http://loki-gateway.monitoring.svc.cluster.local/loki/api/v1/push"
+        }
+      }
+  resources:
+    limits:
+      cpu: 200m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
