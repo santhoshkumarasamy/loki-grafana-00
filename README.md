@@ -51,13 +51,22 @@ kubectl -n grafana port-forward --address 0.0.0.0 svc/grafana 8081:80
 CaowMO93kC74sbCkXelSGVpKxQlL3vBhLE5iNYkJ
 
 
-Now lets setup loki and alloy
+# Now lets setup loki and alloy 
 
-## Settup Loki
+## Setup Loki and alloy with some references
 
 ```sh
 kubectl apply -f loki.yaml
 ```
 
+Here loki didnt use minio for storage cause its going deprecated.
 
+```sh
+kubectl apply -f alloy.yaml
+```
 https://devopscube.com/setup-grafana-loki/#step-3-deploy-loki
+
+This configs I took references form the above blog. Refer for more details.
+
+
+## Setting up Loki with s3 storage

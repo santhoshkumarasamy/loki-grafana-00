@@ -1,0 +1,1 @@
+aws s3 mb s3://loki-test-bucket-sk --region us-east-1

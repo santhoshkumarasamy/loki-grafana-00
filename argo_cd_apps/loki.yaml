@@ -8,28 +8,16 @@ spec:
     namespace: loki
     server: https://kubernetes.default.svc
   project: default
-  source:
-    chart: loki
+  sources:
+  - chart: loki
     helm:
-      parameters:
-      - name: loki.auth_enabled
-        value: "false"
-      - name: loki.storage.type
-        value: filesystem
-      - name: backend.replicas
-        value: "0"
-      - name: read.replicas
-        value: "0"
-      - name: write.replicas
-        value: "0"
-      - name: singleBinary.replicas
-        value: "1"
-      - name: loki.useTestSchema
-        value: "true"
-      - name: loki.commonConfig.replication_factor
-        value: "1"
+      valueFiles:
+      - $values/helm_charts/00_loki_helm_chart_override.yaml
     repoURL: https://grafana-community.github.io/helm-charts/
     targetRevision: 18.11.0
+  - repoURL: https://github.com/santhoshkumarasamy/loki-garafana-00
+    targetRevision: main
+    ref: values
   syncPolicy:
     automated:
       enabled: true
