@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: alloy
+  namespace: default
+spec:
+  destination:
+    namespace: alloy
+    server: https://kubernetes.default.svc
+  sources:
+    - path: ''
+      repoURL: https://github.com/santhoshkumarasamy/loki-grafana-00
+      targetRevision: main
+      ref: values
+    - repoURL: https://grafana.github.io/helm-charts
+      targetRevision: 1.11.1
+      chart: alloy
+      helm:
+        valueFiles:
+          - $values/helm_charts/00_alloy_helm_chart_override.yaml
+  project: default
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: false
+      selfHeal: false
+      enabled: true
