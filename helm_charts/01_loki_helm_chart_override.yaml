@@ -26,8 +26,8 @@ loki:
       type: s3
       storage_prefix: loki
       s3:
-        region: us-east-1
         endpoint: https://s3.us-east-1.amazonaws.com
+        region: us-east-1
 
   limits_config:
     retention_period: 168h
